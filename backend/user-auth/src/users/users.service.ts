@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef  } from '@nestjs/common';
+import { Injectable, Inject, forwardRef, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../models/user.entity';
@@ -14,7 +14,7 @@ export class UsersService {
         private authService: AuthService,
     ) { }
 
-    async findAll(): Promise<User[]> {        
+    async findAll(): Promise<User[]> {
         return this.usersRepository.find();
     }
 
@@ -22,31 +22,25 @@ export class UsersService {
         return this.usersRepository.findOneBy({ id });
     }
 
-    async create(user: User): Promise<User> {
-        return this.usersRepository.save(user);
-    }
+    // async create(user: User): Promise<User> {
+    //     return this.usersRepository.save(user);
+    // }
 
     async remove(id: number): Promise<void> {
         await this.usersRepository.delete(id);
     }
 
     async register(username: string, password: string, email: string): Promise<User> {
+        const old_user = await this.usersRepository.findOne({ where: { username } });
+        if (old_user) {
+            throw new ConflictException('Username is already taken!');
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = this.usersRepository.create({ username, password: hashedPassword, email });
-        return this.usersRepository.save(user);
+        return this.usersRepository.save({ username, password: hashedPassword, email });
     }
 
     async findByUsername(username: string): Promise<User> {
         return this.usersRepository.findOne({ where: { username } });
     }
-
-    async findOneByEmail(email: string): Promise<User | undefined> {
-        return this.usersRepository.findOne({ where: { email } });
-    }
-
-    async findOneByEmail2(email: string): Promise<User | undefined> {
-        return this.usersRepository.findOneBy({ email });
-    }
-
 
 }

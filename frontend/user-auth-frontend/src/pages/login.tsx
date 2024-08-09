@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,13 +9,22 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token'); 
+        if (token) {            
+            router.push('/'); 
+        }
+    }, [router]);
+
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const response = await axios.post('http://localhost:3001/auth/login', { username, password });
-        console.log(response)
+        // console.log(response)
         if (response.data.access_token && response.data.access_token != "") {
             localStorage.setItem('token', response.data.access_token);
-            router.push('/');
+            localStorage.setItem('username', response.data.username);
+            router.reload();
         } else {
             setErrorMessage('Invalid username or password');
         }

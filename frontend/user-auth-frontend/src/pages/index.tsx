@@ -13,10 +13,14 @@ export default function Users() {
     const [error, setError] = useState(null);
     const [msg, setMessage] = useState<string>();
 
-    const handleDelete = (userId: number) => {
-        // Logic to delete the user, e.g., call an API to delete the user
-        console.log(`Delete user with ID: ${userId}`);
-        // Update the users state to remove the deleted user
+    const handleDelete = async (userId: number) => {
+        console.log(`Delete user with ID: ${userId}`)
+        const token = localStorage.getItem('token')
+        const response = await axios.delete(`http://localhost:3001/users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         setUsers(users.filter(user => user.id !== userId));
     };
 
@@ -53,7 +57,6 @@ export default function Users() {
                     </p>
                 </Link>
             </div>
-
         )
     }
 

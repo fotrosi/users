@@ -13,17 +13,17 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @UseGuards(AuthGuard)
-    @Get(':id')
-    findOne(@Param('id') id: number): Promise<User> {
-        return this.usersService.findOne(id);
-    }
+    // @UseGuards(AuthGuard)
+    // @Get(':id')
+    // findOne(@Param('id') id: number): Promise<User> {
+    //     return this.usersService.findOne(id);
+    // }
 
-    @UseGuards(AuthGuard)
-    @Post()
-    create(@Body() user: User): Promise<User> {
-        return this.usersService.create(user);
-    }
+    // @UseGuards(AuthGuard)
+    // @Post()
+    // create(@Body() user: User): Promise<User> {
+    //     return this.usersService.create(user);
+    // }
 
     @UseGuards(AuthGuard)
     @Delete(':id')

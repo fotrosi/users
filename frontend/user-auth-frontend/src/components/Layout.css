@@ -8,13 +8,15 @@
   background-color: #0070f3;
   color: white;
   padding: 1rem;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .main-content {
   flex: 1;
   padding: 1rem;
- text-align: center;
+  text-align: center;
 }
 
 .footer {
@@ -23,3 +25,4 @@
   text-align: center;
   padding: 1rem;
 }
+
