@@ -22,10 +22,6 @@ export class UsersService {
         return this.usersRepository.findOneBy({ id });
     }
 
-    // async create(user: User): Promise<User> {
-    //     return this.usersRepository.save(user);
-    // }
-
     async remove(id: number): Promise<void> {
         await this.usersRepository.delete(id);
     }

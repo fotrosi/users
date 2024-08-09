@@ -19,18 +19,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     };
 
     return (
-        // <div className="layout">
-        //     <header className="header">
-        //         <link rel="icon" href="/favicon.ico" />
-        //         <h1>My Demo App</h1>
-        //     </header>
-        //     <main className="main-content">
-        //         {children}
-        //     </main>
-        //     <footer className="footer">
-        //         <p>© 2024 My App</p>
-        //     </footer>
-        // </div>
         <div className="layout">
             <header className="header flex justify-between items-center p-4 bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
                 <h1 className="text-2xl">My Demo App</h1>

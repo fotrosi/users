@@ -2,7 +2,6 @@ import { Injectable, Inject, forwardRef, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { LocalAuthGuard } from './local-auth.guard';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +13,6 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findByUsername(username);
-    console.log("user:", user)
 
     if (user && await bcrypt.compare(password, user.password)) {
       const { password, ...result } = user;
@@ -23,10 +21,8 @@ export class AuthService {
     return null;
   }
 
-  @UseGuards(LocalAuthGuard)
   async login(username: string, password: string) {
     const user = await this.validateUser(username, password);
-    console.log("user:", user)
     if (user) {
       const payload = { username: username, sub: user.id };
       return {

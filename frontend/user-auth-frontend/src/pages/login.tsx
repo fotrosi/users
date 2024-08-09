@@ -31,21 +31,6 @@ export default function Login() {
     };
 
     return (
-        // <form onSubmit={handleSubmit}>
-        //     <input
-        //         type="text"
-        //         value={username}
-        //         onChange={(e) => setUsername(e.target.value)}
-        //         placeholder="Username"
-        //     />
-        //     <input
-        //         type="password"
-        //         value={password}
-        //         onChange={(e) => setPassword(e.target.value)}
-        //         placeholder="Password"
-        //     />
-        //     <button type="submit">Login</button>
-        // </form>
         <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
             <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
                 <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Login</h2>

@@ -65,11 +65,6 @@ export default function Users() {
     }
 
     return (
-        // <ul>
-        //     {users && users.map(user => (
-        //         <li key={user.id}>{user.username} ({user.email})</li>
-        //     ))}
-        // </ul>
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">User List</h2>
             <div className="w-full max-w-4xl">
@@ -91,6 +86,5 @@ export default function Users() {
                 </div>
             </div>
         </div>
-
     );
 }
