@@ -1,7 +1,6 @@
 import { Injectable, Inject, forwardRef, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../models/user.entity';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from './local-auth.guard';
 
