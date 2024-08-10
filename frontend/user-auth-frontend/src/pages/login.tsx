@@ -10,18 +10,17 @@ export default function Login() {
     const router = useRouter();
 
     useEffect(() => {
-        const token = localStorage.getItem('token'); 
-        if (token) {            
-            router.push('/'); 
+        const token = localStorage.getItem('token');
+        if (token) {
+            router.push('/');
         }
     }, [router]);
-
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const response = await axios.post('http://localhost:3001/auth/login', { username, password });
         // console.log(response)
-        if (response.data.access_token && response.data.access_token != "") {
+        if (response.data.access_token && response.data.access_token !== '') {
             localStorage.setItem('token', response.data.access_token);
             localStorage.setItem('username', response.data.username);
             router.reload();
@@ -70,7 +69,7 @@ export default function Login() {
                 {/* Link to Register Page */}
                 <div className="mt-4 text-center">
                     <p className="text-gray-600 dark:text-gray-400">
-                        Don't have an account?{' '}
+                        Do not have an account?{' '}
                         <Link href="/register">
                             <span className="text-blue-600 hover:underline dark:text-blue-400">Register here</span>
                         </Link>
