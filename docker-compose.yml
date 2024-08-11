@@ -11,6 +11,8 @@ services:
       POSTGRES_USER: users
       POSTGRES_PASSWORD: Admin@000
       POSTGRES_DB: users
+      JWT_SECRET: dIVcQJtrRve_zz4v7xegrA
+      JWT_ExpiresIn: 60m
     volumes:
       - ./backend/user-auth:/app
     depends_on:
