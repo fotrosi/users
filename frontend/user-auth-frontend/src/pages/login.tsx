@@ -18,14 +18,23 @@ export default function Login() {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const response = await axios.post('http://localhost:3001/auth/login', { username, password });
-        // console.log(response)
-        if (response.data.access_token && response.data.access_token !== '') {
-            localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('username', response.data.username);
-            router.reload();
-        } else {
-            setErrorMessage('Invalid username or password');
+        try {
+            const response = await axios.post('http://localhost:3001/auth/login', { username, password });
+            console.log(response);
+            if (response.data.access_token && response.data.access_token !== '') {
+                localStorage.setItem('token', response.data.access_token);
+                localStorage.setItem('username', response.data.username);
+                router.reload();
+            } else {
+                setErrorMessage('Invalid username or password');
+            }
+        } catch (error: any) {
+            console.error('Error during login:', error);
+            if (error.response.status == 401) {
+                setErrorMessage('Invalid username or password');
+            } else {
+                setErrorMessage('An error occurred during login. Please try again.');
+            }
         }
     };
 
