@@ -19,6 +19,14 @@ export default function Login() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
+            if(!username){
+                setErrorMessage('username is required.');
+                return;
+            }
+            if(!password){
+                setErrorMessage('password is required.');
+                return;
+            }
             const response = await axios.post('http://localhost:3001/auth/login', { username, password });
             console.log(response);
             if (response.data.access_token && response.data.access_token !== '') {

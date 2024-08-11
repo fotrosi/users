@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { FaHeart } from 'react-icons/fa';
 
 interface User {
     id: number;
@@ -12,9 +13,13 @@ export default function Users() {
     const [users, setUsers] = useState<User[]>([]);
     const [error, setError] = useState(null);
     const [msg, setMessage] = useState<string>();
+    const [currentUsername, setCurrentUsername] = useState('');
 
     const handleDelete = async (userId: number) => {
-        console.log(`Delete user with ID: ${userId}`)
+        //console.log(`Delete user with ID: ${userId}`)
+        if (!confirm("Are you sure?")) {
+            return;
+        }
         const token = localStorage.getItem('token')
         const response = await axios.delete(`http://localhost:3001/users/${userId}`, {
             headers: {
@@ -33,11 +38,13 @@ export default function Users() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log(response);
+                //console.log(response);
                 setUsers(response.data);
+                setCurrentUsername(localStorage.getItem('username') || '');
             } catch (err: any) {
                 if (err.code == "ERR_BAD_REQUEST") {
                     setMessage("To view user list first login to system:")
+                    localStorage.removeItem('token')
                 } else {
                     setError(err.message);
                 }
@@ -75,12 +82,16 @@ export default function Users() {
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{user.username}</h3>
                                 <p className="text-gray-600 dark:text-gray-400">{user.email}</p>
                             </div>
-                            <button
-                                onClick={() => handleDelete(user.id)}
-                                className="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-700 transition duration-300"
-                            >
-                                Delete
-                            </button>
+                            {user.username !== currentUsername ? (
+                                <button
+                                    onClick={() => handleDelete(user.id)}
+                                    className="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-700 transition duration-300"
+                                >
+                                    Delete
+                                </button>
+                            ) : (
+                                <FaHeart className="text-red-600 text-2xl" />
+                            )}
                         </div>
                     ))}
                 </div>
